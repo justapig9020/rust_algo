@@ -43,35 +43,14 @@ fn sort(arr: &mut [i32]) {
     }
 
     let std = arr[len - 1];
-    println!("len: {}; std: {}", len, std);
     let mut less = 0;
     for i in 0..len {
         if arr[i] <= std {
-            swap(arr[less..less], arr[i..i]);
-            /*
-            arr[less] ^= arr[i];
-            arr[i] ^= arr[less];
-            arr[less] ^= arr[i];
-            */
-
-            println!("{} @ {}", less, arr[less]);
-            println!("{} @ {}", i, arr[i]);
+            arr.swap(i, less);
             less += 1;
         }
     }
 
-    println!("");
-    for i in arr.iter() {
-        print!("{}, ", i);
-    }
-    println!("");
-
     sort(&mut arr[..less - 1]);
     sort(&mut arr[less..]);
-}
-
-fn swap(a: &mut [i32], b: &mut [i32]) {
-    a[0] ^= b[0];
-    b[0] ^= a[0];
-    a[0] ^= b[0];
 }
