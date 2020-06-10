@@ -47,7 +47,7 @@ fn sort(arr: &mut [i32]) {
     let mut less = 0;
     for i in 0..len {
         if arr[i] <= std {
-            swap(arr[less..less], arr[i..i]);
+            swap(&mut arr[less..less], &mut arr[i..i]);
             /*
             arr[less] ^= arr[i];
             arr[i] ^= arr[less];
