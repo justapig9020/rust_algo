@@ -3,13 +3,6 @@ use std::num::ParseIntError;
 
 fn main() {
     let mut list = List::<i32>::new();
-    list.insert(10);
-    list.insert(11);
-    list.insert(12);
-    list.insert(13);
-    list.traversal();
-    list.remove(1);
-    list.traversal();
     loop {
         let val = get_int();
         if val == 0 {
@@ -18,7 +11,10 @@ fn main() {
         list.insert(val);
     }
     list.traversal();
-    list.remove(1);
+    match list.remove(1) {
+        Ok(num) => println!("Removed {}", num),
+        Err(msg) => println!("Remove failed with {}", msg),
+    }
     list.traversal();
 }
 
@@ -62,8 +58,7 @@ impl<T> Node<T> {
 
 impl<T> List<T>
 where
-    T: std::fmt::Display + std::fmt::Debug,
-    //+ Copy + Clone,
+    T: std::fmt::Display + std::fmt::Debug + Copy + Clone,
 {
     fn new() -> Box<List<T>> {
         Box::new(List {
@@ -93,10 +88,11 @@ where
         //let ret = ptr.unwrap().val.take();
         match ptr {
             Some(n) => {
+                let ret = n.val;
                 *ptr = n.next.take();
-                return Ok(n.val.take());
+                return Ok(ret);
             }
-            None => return Err("No node".to_string()),
+            None => return Err("Empty node".to_string()),
         }
     }
 
