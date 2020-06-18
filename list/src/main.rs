@@ -7,7 +7,9 @@ fn main() {
     list.insert(11);
     list.insert(12);
     list.insert(13);
+    list.traversal();
     list.remove(1);
+    list.traversal();
     loop {
         let val = get_int();
         if val == 0 {
@@ -15,6 +17,8 @@ fn main() {
         }
         list.insert(val);
     }
+    list.traversal();
+    list.remove(1);
     list.traversal();
 }
 
@@ -36,7 +40,7 @@ fn get_int() -> i32 {
     }
 }
 
-#[desire(debug)]
+#[derive(Debug)]
 struct Node<T> {
     val: T,
     next: Option<Box<Node<T>>>,
@@ -58,7 +62,8 @@ impl<T> Node<T> {
 
 impl<T> List<T>
 where
-    T: std::fmt::Display + Copy,
+    T: std::fmt::Display + std::fmt::Debug,
+    //+ Copy + Clone,
 {
     fn new() -> Box<List<T>> {
         Box::new(List {
@@ -85,10 +90,14 @@ where
         for _ in 0..num {
             ptr = &mut ptr.as_mut().unwrap().next;
         }
-        let ret = ptr.as_ref().unwrap().val;
-        //*ptr = ptr.as_mut().unwrap().next;
-        println!("Rm: {:?}", ptr.as_mut().unwrap().next);
-        return Ok(ret);
+        //let ret = ptr.unwrap().val.take();
+        match ptr {
+            Some(n) => {
+                *ptr = n.next.take();
+                return Ok(n.val.take());
+            }
+            None => return Err("No node".to_string()),
+        }
     }
 
     fn traversal(&self) {
