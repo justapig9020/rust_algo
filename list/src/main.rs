@@ -80,7 +80,7 @@ where
         let mut ptr = &mut self.head;
         loop {
             match ptr {
-                Some(ref mut this) => ptr = &mut this.next,
+                Some(this) => ptr = &mut this.next,
                 None => break,
             }
         }
@@ -137,7 +137,7 @@ where
         let mut ptr = &self.head;
         loop {
             match ptr {
-                Some(ref cur) => {
+                Some(cur) => {
                     print!("{}, ", cur.val);
                     ptr = &cur.next;
                 }
