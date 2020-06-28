@@ -133,36 +133,16 @@ where
         }
     }
 
-    /*
-    fn remove_val(&mut self, val: T) -> Result<usize, String> {
-        let mut ptr = &mut self.head;
-        let mut idx = 0;
-        loop {
-            match ptr {
-                Some(cur) => {
-                    if cur.val == val {
-                        break;
-                    } else {
-                        ptr = &mut cur.next;
-                        idx += 1;
-                    }
-                }
-                None => {
-                    return Err("Value not found".to_string());
-                }
-            }
-        }
-        *ptr = ptr.unwrap().next.take();
-        return Ok(idx);
-    }
-    */
-
     fn traversal(&self) {
         let mut ptr = &self.head;
-        while ptr.is_some() {
-            let node = ptr.as_ref().unwrap();
-            print!("{}, ", node.val);
-            ptr = &ptr.as_ref().unwrap().next;
+        loop {
+            match ptr {
+                Some(ref cur) => {
+                    print!("{}, ", cur.val);
+                    ptr = &cur.next;
+                }
+                None => break,
+            }
         }
         println!("");
     }
