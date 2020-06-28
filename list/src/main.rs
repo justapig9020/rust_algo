@@ -133,6 +133,29 @@ where
         }
     }
 
+    /* Why this not works?
+    fn remove_val(&mut self, val: T) -> Result<usize, String> {
+        let mut ptr = &mut self.head;
+        let mut idx = 0;
+        loop {
+            match ptr {
+                Some(cur) => {
+                    if cur.val == val {
+                        break;
+                    } else {
+                        ptr = &mut cur.next;
+                        idx += 1;
+                    }
+                }
+                None => return Err("No node with this value".to_string()),
+            }
+        }
+        *ptr = ptr.as_mut().unwrap().next.take();
+        self.size -= 1;
+        return Ok(idx);
+    }
+    */
+
     fn traversal(&self) {
         let mut ptr = &self.head;
         loop {
